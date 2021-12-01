@@ -3,7 +3,7 @@ using aoc_2021.solutions;
 
 namespace aoc_2021_test;
 
-public class UnitTest1
+public class Day1Test
 {
     private string input = @"199
 200
