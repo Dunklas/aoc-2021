@@ -17,13 +17,13 @@ public class Day1Test
 263";
 
     [Fact]
-    public void Day1Part1()
+    public void Part1()
     {
         Assert.Equal(7, new Day1().SolvePart1(input));
     }
 
     [Fact]
-    public void Day1Part2()
+    public void Part2()
     {
         Assert.Equal(5, new Day1().SolvePart2(input));
     }
