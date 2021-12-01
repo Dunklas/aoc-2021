@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace aoc_2021.solutions
@@ -14,38 +15,34 @@ namespace aoc_2021.solutions
         public int SolvePart1(string input)
         {
             var depthMeasurements = ParseInput(input);
-            var increases = 0;
-            for (int i = 1; i < depthMeasurements.Length; i++)
-            {
-                if (depthMeasurements[i] > depthMeasurements[i-1])
-                {
-                    increases++;
-                }
-            } 
-            return increases;
+            var totalIncreases = Enumerable.Range(0, depthMeasurements.Count - 1)
+                .Where(x => depthMeasurements[x + 1] > depthMeasurements[x])
+                .Count();
+            return totalIncreases;
         }
 
         public int SolvePart2(string input)
         {
             var depthMeasurements = ParseInput(input);
-            var increases = 0;
-            for (int i = 3; i < depthMeasurements.Length; i++)
-            {
-                var firstWindow = depthMeasurements[i-3] + depthMeasurements[i-2] + depthMeasurements[i-1];
-                var secondWindow = depthMeasurements[i-2] + depthMeasurements[i-1] + depthMeasurements[i];
-                if (secondWindow > firstWindow)
-                {
-                    increases++;
-                }
-            }
-            return increases;
+            var measurementWindows = MeasurementWindows(depthMeasurements, 3);
+            var totalIncreases = Enumerable.Range(0, measurementWindows.Count - 1)
+                .Where(x => measurementWindows[x + 1] > measurementWindows[x])
+                .Count();
+            return totalIncreases;
         }
 
-        private int[] ParseInput(string input)
+        private List<int> MeasurementWindows(List<int> measurements, int windowSize)
+        {
+            return Enumerable.Range(0, measurements.Count - windowSize + 1)
+                .Select(x => measurements.GetRange(x, windowSize).Sum())
+                .ToList();
+        }
+
+        private List<int> ParseInput(string input)
         {
             return input.Split("\n")
                 .Select(line => int.Parse(line))
-                .ToArray();
+                .ToList();
         }
     }
 }
