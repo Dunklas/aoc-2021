@@ -1,5 +1,5 @@
+﻿using aoc_2021.solutions;
 using Xunit;
-using aoc_2021.solutions;
 
 namespace aoc_2021_test;
 
