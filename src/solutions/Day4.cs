@@ -60,7 +60,7 @@ public class Day4
             .ToHashSet();
         var sum = allBoardNumbers.Except(drawedNumbers)
             .Sum();
-        return sum * drawedNumbers.Last(); 
+        return sum * drawedNumbers.Last();
     }
 
     private BingoInput ParseInput(string input)
