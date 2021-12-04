@@ -16,9 +16,9 @@ public class Day4
     public int SolvePart1(string input)
     {
         var parsed = ParseInput(input);
-        for (int i = 4; i < parsed.Numbers.Count(); i++)
+        for (int round = 4; round < parsed.Numbers.Count(); round++)
         {
-            var drawedNumbers = parsed.Numbers.GetRange(0, i + 1);
+            var drawedNumbers = parsed.Numbers.GetRange(0, round + 1);
             var winner = parsed.Boards
                 .Where(board => board.AllRows.Any(row => row.IsSubsetOf(drawedNumbers)))
                 .FirstOrDefault();
@@ -33,21 +33,20 @@ public class Day4
         var parsed = ParseInput(input);
         List<int> lastDrawedNumbers = null;
         var winners = new List<Board>();
-        for (int i = 4; i < parsed.Numbers.Count(); i++)
+        for (int round = 4; round < parsed.Numbers.Count(); round++)
         {
-            var drawedNumbers = parsed.Numbers.GetRange(0, i + 1);
+            if (winners.Count() == parsed.Boards.Count())
+                break;
+
+            var drawedNumbers = parsed.Numbers.GetRange(0, round + 1);
             parsed.Boards
-                .Where(board =>
-                    board.AllRows.Any(row => row.IsSubsetOf(drawedNumbers)
-                ))
+                .Where(board => !winners.Contains(board))
+                .Where(board => board.AllRows.Any(row => row.IsSubsetOf(drawedNumbers)))
                 .ToList()
-                .ForEach(winner =>
+                .ForEach(newWinner =>
                 {
-                    if (!winners.Contains(winner))
-                    {
-                        winners.Add(winner);
-                        lastDrawedNumbers = drawedNumbers;
-                    }
+                    winners.Add(newWinner);
+                    lastDrawedNumbers = drawedNumbers;
                 });
         }
         var lastWinner = winners.Last();
