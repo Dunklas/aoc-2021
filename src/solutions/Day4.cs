@@ -16,10 +16,10 @@ public class Day4
     public int SolvePart1(string input)
     {
         var parsed = ParseInput(input);
-        for (int i = 4; i < parsed.Item1.Count(); i++)
+        for (int i = 4; i < parsed.Numbers.Count(); i++)
         {
-            var drawedNumbers = parsed.Item1.GetRange(0, i + 1);
-            var winner = parsed.Item2
+            var drawedNumbers = parsed.Numbers.GetRange(0, i + 1);
+            var winner = parsed.Boards
                 .Where(board => board.AllRows.Any(row => row.IsSubsetOf(drawedNumbers)))
                 .FirstOrDefault();
             if (winner != null)
@@ -33,10 +33,10 @@ public class Day4
         var parsed = ParseInput(input);
         List<int> lastDrawedNumbers = null;
         var winners = new List<Board>();
-        for (int i = 4; i < parsed.Item1.Count(); i++)
+        for (int i = 4; i < parsed.Numbers.Count(); i++)
         {
-            var drawedNumbers = parsed.Item1.GetRange(0, i + 1);
-            parsed.Item2
+            var drawedNumbers = parsed.Numbers.GetRange(0, i + 1);
+            parsed.Boards
                 .Where(board =>
                     board.AllRows.Any(row => row.IsSubsetOf(drawedNumbers)
                 ))
@@ -64,7 +64,7 @@ public class Day4
         return sum * drawedNumbers.Last(); 
     }
 
-    private (List<int>, List<Board>) ParseInput(string input)
+    private BingoInput ParseInput(string input)
     {
         var parts = input.Split("\n\n");
         var numbers = parts[0].Split(",")
@@ -96,9 +96,11 @@ public class Day4
                 return new Board(rows, columns);
             })
             .ToList();
-        return (numbers, boards);
+        return new BingoInput(numbers, boards);
     }
 }
+
+public readonly record struct BingoInput(List<int> Numbers, List<Board> Boards);
 
 public class Board
 {
