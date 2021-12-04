@@ -71,27 +71,16 @@ public class Day4
             .ToList();
 
         var boards = Enumerable.Range(1, parts.Count() - 1)
-            .Select(i =>
+            .Select(rawBoardIndex =>
             {
-                var rows = new HashSet<List<int>>();
-                var columns = new HashSet<List<int>>();
-                var rawRows = parts[i].Split("\n");
-                for (int j = 0; j < 5; j++)
-                {
-                    var rowNumbers = Regex.Split(rawRows[j].Trim(), " +");
-                    var row = new List<int>();
-                    for (int k = 0; k < 5; k++)
-                    {
-                        row.Add(int.Parse(rowNumbers[k]));
-                    }
-                    rows.Add(row);
-                }
-                for (int j = 0; j < 5; j++)
-                {
-                    columns.Add(rows.ToList()
-                        .Select(row => row[j])
-                        .ToList());
-                }
+                var rawRows = parts[rawBoardIndex].Split("\n");
+                var rows = rawRows.ToList()
+                    .Select(rawRow => Regex.Split(rawRow.Trim(), " +"))
+                    .Select(row => row.Select(n => int.Parse(n)).ToList())
+                    .ToList();
+                var columns = Enumerable.Range(0, 5)
+                    .Select(i => rows.Select(row => row[i]).ToList())
+                    .ToList();
                 return new Board(rows, columns);
             })
             .ToList();
@@ -105,7 +94,7 @@ public class Board
 {
     public List<HashSet<int>> AllRows { get; }
 
-    public Board(HashSet<List<int>> rows, HashSet<List<int>> columns)
+    public Board(List<List<int>> rows, List<List<int>> columns)
     {
         AllRows = rows.Union(columns)
             .Select(row => row.ToHashSet())
