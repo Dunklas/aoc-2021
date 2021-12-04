@@ -18,33 +18,24 @@ public class Day4
         var parsed = ParseInput(input);
         for (int i = 4; i < parsed.Item1.Count(); i++)
         {
-            var drawedNumbers = parsed.Item1.GetRange(0, i + 1).ToHashSet();
+            var drawedNumbers = parsed.Item1.GetRange(0, i + 1);
             var winner = parsed.Item2
-                .Where(board =>
-                    board.AllRows.Any(row => row.IsSubsetOf(drawedNumbers))
-                )
+                .Where(board => board.AllRows.Any(row => row.IsSubsetOf(drawedNumbers)))
                 .FirstOrDefault();
             if (winner != null)
-            {
-                var allNumbers = winner.AllRows
-                    .SelectMany(row => row)
-                    .ToHashSet();
-                var sum = allNumbers.Except(drawedNumbers)
-                    .Sum();
-                return sum * drawedNumbers.Last();
-            }
+                return CalculateScore(winner, drawedNumbers);
         }
-        return 42;
+        return -1;
     }
 
     public int SolvePart2(string input)
     {
         var parsed = ParseInput(input);
-        HashSet<int> lastDrawedNumbers = null;
+        List<int> lastDrawedNumbers = null;
         var winners = new List<Board>();
         for (int i = 4; i < parsed.Item1.Count(); i++)
         {
-            var drawedNumbers = parsed.Item1.GetRange(0, i + 1).ToHashSet();
+            var drawedNumbers = parsed.Item1.GetRange(0, i + 1);
             parsed.Item2
                 .Where(board =>
                     board.AllRows.Any(row => row.IsSubsetOf(drawedNumbers)
@@ -60,12 +51,17 @@ public class Day4
                 });
         }
         var lastWinner = winners.Last();
-        var allNumbers = lastWinner.AllRows
+        return CalculateScore(lastWinner, lastDrawedNumbers);
+    }
+
+    private int CalculateScore(Board board, List<int> drawedNumbers)
+    {
+        var allBoardNumbers = board.AllRows
             .SelectMany(row => row)
             .ToHashSet();
-        var sum = allNumbers.Except(lastDrawedNumbers)
+        var sum = allBoardNumbers.Except(drawedNumbers)
             .Sum();
-        return sum * lastDrawedNumbers.Last();
+        return sum * drawedNumbers.Last(); 
     }
 
     private (List<int>, List<Board>) ParseInput(string input)
