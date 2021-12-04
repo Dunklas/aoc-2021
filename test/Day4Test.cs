@@ -27,12 +27,12 @@ public class Day4Test
     [Fact]
     public void Part1()
     {
-        Assert.Equal(42, new Day4().SolvePart1(input));
+        Assert.Equal(4512, new Day4().SolvePart1(input));
     }
 
     [Fact]
     public void Part2()
     {
-        Assert.Equal(42, new Day4().SolvePart2(input));
+        Assert.Equal(1924, new Day4().SolvePart2(input));
     }
 }
