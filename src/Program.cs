@@ -33,6 +33,9 @@ class Program
             case "2":
                 new Day2().Solve(input);
                 break;
+            case "4":
+                new Day4().Solve(input);
+                break;
             default:
                 throw new NotImplementedException();
         }
