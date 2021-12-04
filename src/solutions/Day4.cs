@@ -15,11 +15,11 @@ public class Day4
 
     public int SolvePart1(string input)
     {
-        var parsed = ParseInput(input);
-        for (int round = 4; round < parsed.Numbers.Count(); round++)
+        var parsedInput = ParseInput(input);
+        for (int round = 4; round < parsedInput.Numbers.Count(); round++)
         {
-            var drawedNumbers = parsed.Numbers.GetRange(0, round + 1);
-            var winner = parsed.Boards
+            var drawedNumbers = parsedInput.Numbers.GetRange(0, round + 1);
+            var winner = parsedInput.Boards
                 .Where(board => board.AllRows.Any(row => row.IsSubsetOf(drawedNumbers)))
                 .FirstOrDefault();
             if (winner != null)
@@ -30,16 +30,16 @@ public class Day4
 
     public int SolvePart2(string input)
     {
-        var parsed = ParseInput(input);
+        var parsedInput = ParseInput(input);
         List<int> lastDrawedNumbers = null;
         var winners = new List<Board>();
-        for (int round = 4; round < parsed.Numbers.Count(); round++)
+        for (int round = 4; round < parsedInput.Numbers.Count(); round++)
         {
-            if (winners.Count() == parsed.Boards.Count())
+            if (winners.Count() == parsedInput.Boards.Count())
                 break;
 
-            var drawedNumbers = parsed.Numbers.GetRange(0, round + 1);
-            parsed.Boards
+            var drawedNumbers = parsedInput.Numbers.GetRange(0, round + 1);
+            parsedInput.Boards
                 .Where(board => !winners.Contains(board))
                 .Where(board => board.AllRows.Any(row => row.IsSubsetOf(drawedNumbers)))
                 .ToList()
@@ -96,7 +96,7 @@ public class Board
 
     public Board(List<List<int>> rows, List<List<int>> columns)
     {
-        AllRows = rows.Union(columns)
+        AllRows = rows.Concat(columns)
             .Select(row => row.ToHashSet())
             .ToList();
     }
