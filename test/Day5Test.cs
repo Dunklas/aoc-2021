@@ -36,7 +36,7 @@ public class Day5Test
             new CoordinatePair(new Coordinate(1, 1), new Coordinate(1, 3)).Line()
         );
         Assert.Equal(
-            new HashSet<Coordinate> { new Coordinate(9, 7), new Coordinate(8, 7), new Coordinate(7, 7) },
+            new HashSet<Coordinate> { new Coordinate(7, 7), new Coordinate(8, 7), new Coordinate(9, 7) },
             new CoordinatePair(new Coordinate(9,7), new Coordinate(7,7)).Line()
         );
         Assert.Equal(
@@ -48,7 +48,7 @@ public class Day5Test
             new CoordinatePair(new Coordinate(1, 1), new Coordinate(3, 3)).Line()
         );
         Assert.Equal(
-            new HashSet<Coordinate> { new Coordinate(9, 7), new Coordinate(8, 8), new Coordinate(7, 9) },
+            new HashSet<Coordinate> { new Coordinate(7, 9), new Coordinate(8, 8), new Coordinate(9, 7) },
             new CoordinatePair(new Coordinate(9, 7), new Coordinate(7, 9)).Line()
         );
     }

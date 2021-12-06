@@ -32,7 +32,7 @@ public class Day5
         var dangerZone = new HashSet<Coordinate>();
         var hydroThermalVents = new HashSet<Coordinate>();
         coordinatePairs.ForEach(pair =>
-            pair.Line().ForEach(coordinate =>
+            pair.Line().ToList().ForEach(coordinate =>
             {
                 if (!hydroThermalVents.Add(coordinate))
                     dangerZone.Add(coordinate);
@@ -68,7 +68,7 @@ public class CoordinatePair
     public bool IsVertical()
         => First.X == Second.X;
 
-    public List<Coordinate> Line()
+    public HashSet<Coordinate> Line()
     {
         var xValues = Enumerable.Range(Math.Min(First.X, Second.X), Math.Max(First.X, Second.X) - Math.Min(First.X, Second.X) + 1);
         var yValues = Enumerable.Range(Math.Min(First.Y, Second.Y), Math.Max(First.Y, Second.Y) - Math.Min(First.Y, Second.Y) + 1);
@@ -85,7 +85,7 @@ public class CoordinatePair
             range = xValues.Zip(yValues);
         return range
             .Select(pair => new Coordinate(pair.First, pair.Second))
-            .ToList();
+            .ToHashSet();
     }
 }
 
