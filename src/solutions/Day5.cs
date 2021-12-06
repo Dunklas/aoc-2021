@@ -70,23 +70,19 @@ public class CoordinatePair
 
     public List<Coordinate> Line()
     {
-        var leftMost = Math.Min(First.X, Second.X) == First.X ? First : Second;
-        var topMost = Math.Min(First.Y, Second.Y) == First.Y ? First : Second;
-        var rightMost = leftMost.Equals(First) ? Second : First;
-        var bottomMost = topMost.Equals(First) ? Second : First;
+        var xValues = Enumerable.Range(Math.Min(First.X, Second.X), Math.Max(First.X, Second.X) - Math.Min(First.X, Second.X) + 1);
+        var yValues = Enumerable.Range(Math.Min(First.Y, Second.Y), Math.Max(First.Y, Second.Y) - Math.Min(First.Y, Second.Y) + 1);
+        if (First.X > Second.X)
+            xValues = xValues.Reverse();
+        if (First.Y > Second.Y)
+            yValues = yValues.Reverse();
         IEnumerable<(int First, int Second)> range = null;
         if (IsHorizontal())
-            range = Enumerable.Range(leftMost.X, rightMost.X - leftMost.X + 1)
-                .Zip(Enumerable.Repeat(First.Y, rightMost.X - leftMost.X + 1));
+            range = xValues.Zip(Enumerable.Repeat(First.Y, xValues.Count()));
         if (IsVertical())
-            range = Enumerable.Repeat(First.X, bottomMost.Y - topMost.Y + 1)
-                .Zip(Enumerable.Range(topMost.Y, bottomMost.Y - topMost.Y + 1));
-        if (!IsHorizontalOrVertical() && leftMost.Equals(topMost))
-            range = Enumerable.Range(leftMost.X, rightMost.X - leftMost.X + 1)
-                .Zip(Enumerable.Range(topMost.Y, bottomMost.Y - topMost.Y + 1));
-        if (!IsHorizontalOrVertical() && leftMost.Equals(bottomMost))
-            range = Enumerable.Range(leftMost.X, rightMost.X - leftMost.X + 1)
-                .Zip(Enumerable.Range(topMost.Y, bottomMost.Y - topMost.Y + 1).Reverse());
+            range = Enumerable.Repeat(First.X, yValues.Count()).Zip(yValues);
+        if (!IsHorizontalOrVertical())
+            range = xValues.Zip(yValues);
         return range
             .Select(pair => new Coordinate(pair.First, pair.Second))
             .ToList();

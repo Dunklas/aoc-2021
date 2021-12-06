@@ -33,23 +33,23 @@ public class Day5Test
     {
         Assert.Equal(
             new HashSet<Coordinate> { new Coordinate(1, 1), new Coordinate(1, 2), new Coordinate(1, 3) },
-            new CoordinatePair(new Coordinate(1, 1), new Coordinate(1, 3)).Between()
+            new CoordinatePair(new Coordinate(1, 1), new Coordinate(1, 3)).Line()
         );
         Assert.Equal(
             new HashSet<Coordinate> { new Coordinate(9, 7), new Coordinate(8, 7), new Coordinate(7, 7) },
-            new CoordinatePair(new Coordinate(9,7), new Coordinate(7,7)).Between()
+            new CoordinatePair(new Coordinate(9,7), new Coordinate(7,7)).Line()
         );
         Assert.Equal(
             new HashSet<Coordinate> { new Coordinate(0, 9), new Coordinate(1, 9), new Coordinate(2, 9), new Coordinate(3, 9), new Coordinate(4, 9), new Coordinate(5, 9) },
-            new CoordinatePair(new Coordinate(0, 9), new Coordinate(5, 9)).Between()
+            new CoordinatePair(new Coordinate(0, 9), new Coordinate(5, 9)).Line()
         );
         Assert.Equal(
             new HashSet<Coordinate> { new Coordinate(1, 1), new Coordinate(2, 2), new Coordinate(3, 3) },
-            new CoordinatePair(new Coordinate(1, 1), new Coordinate(3, 3)).Between()
+            new CoordinatePair(new Coordinate(1, 1), new Coordinate(3, 3)).Line()
         );
         Assert.Equal(
             new HashSet<Coordinate> { new Coordinate(9, 7), new Coordinate(8, 8), new Coordinate(7, 9) },
-            new CoordinatePair(new Coordinate(9, 7), new Coordinate(7, 9)).Between()
+            new CoordinatePair(new Coordinate(9, 7), new Coordinate(7, 9)).Line()
         );
     }
 }
