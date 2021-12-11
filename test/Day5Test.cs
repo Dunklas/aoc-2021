@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using aoc_2021.solutions;
+using aoc_2021.utils;
 using Xunit;
 
 namespace aoc_2021_test;
