@@ -48,6 +48,9 @@ class Program
             case "7":
                 new Day7().Solve(input);
                 break;
+            case "8":
+                new Day8().Solve(input);
+                break;
             case "10":
                 new Day10().Solve(input);
                 break;
